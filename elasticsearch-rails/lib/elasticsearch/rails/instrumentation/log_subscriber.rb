@@ -32,6 +32,19 @@ module Elasticsearch
 
           debug %Q|  #{color(name, GREEN, true)} #{colorize_logging ? "\e[2m#{search}\e[0m" : search}|
         end
+
+        # Intercept `scan.elasticsearch` events, and display them in the Rails log
+        #
+        def scan(event)
+          self.class.runtime += event.duration
+          return unless logger.debug?
+
+          payload = event.payload
+          name    = "#{payload[:klass]} #{payload[:name]} (#{event.duration.round(1)}ms)"
+          scan    = payload[:scan].inspect.gsub(/:(\w+)=>/, '\1: ')
+
+          debug %Q|  #{color(name, GREEN, true)} #{colorize_logging ? "\e[2m#{scan}\e[0m" : scan}|
+        end
       end
 
     end

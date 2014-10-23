@@ -12,6 +12,10 @@ module Elasticsearch
           require 'elasticsearch/rails/instrumentation/log_subscriber'
           require 'elasticsearch/rails/instrumentation/controller_runtime'
 
+          Elasticsearch::Model::Scanning::ScanRequest.class_eval do
+            include Elasticsearch::Rails::Instrumentation::Publishers::ScanRequest
+          end if defined?(Elasticsearch::Model::Scanning::ScanRequest)
+
           Elasticsearch::Model::Searching::SearchRequest.class_eval do
             include Elasticsearch::Rails::Instrumentation::Publishers::SearchRequest
           end if defined?(Elasticsearch::Model::Searching::SearchRequest)
