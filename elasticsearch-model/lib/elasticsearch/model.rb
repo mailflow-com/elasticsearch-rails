@@ -17,6 +17,7 @@ require 'elasticsearch/model/importing'
 require 'elasticsearch/model/indexing'
 require 'elasticsearch/model/naming'
 require 'elasticsearch/model/serializing'
+require 'elasticsearch/model/scanning'
 require 'elasticsearch/model/searching'
 require 'elasticsearch/model/callbacks'
 
@@ -62,7 +63,7 @@ module Elasticsearch
   #     # ...
   #
   module Model
-    METHODS = [:search, :mapping, :mappings, :settings, :index_name, :document_type, :import]
+    METHODS = [:scan, :search, :mapping, :mappings, :settings, :index_name, :document_type, :import]
 
     # Adds the `Elasticsearch::Model` functionality to the including class.
     #
@@ -89,6 +90,7 @@ module Elasticsearch
           include Elasticsearch::Model::Client::ClassMethods
           include Elasticsearch::Model::Naming::ClassMethods
           include Elasticsearch::Model::Indexing::ClassMethods
+          include Elasticsearch::Model::Scanning::ClassMethods
           include Elasticsearch::Model::Searching::ClassMethods
         end
 
